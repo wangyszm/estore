@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-3.2.xsd">
+           
+<!-- 测试Spring自定义编辑器 -->
+	<bean id="client" class="com.test.customEdit.ClientClass">
+		<property name="str" value="this is customEdit" />
+		<property name="targetClass" value="hello world"></property>
+	</bean>
+	
+<!-- 注册自定义编辑器类的bean，并将其加入到自定义编辑器的配置bean中 -->
+	<bean id="targetEditor" class="com.test.customEdit.TargetEditor"></bean>
+	<bean class="org.springframework.beans.factory.config.CustomEditorConfigurer">
+		<property name="customEditors">
+			<map>
+				<!-- customEditors类型为Map<String,?>，需要key是目标类的全限定名，value是自定义的编辑器 -->
+				<entry key="com.test.customEdit.TargetClass" value-ref="targetEditor"></entry>
+			</map>
+		</property>
+	</bean>
+
+</beans>

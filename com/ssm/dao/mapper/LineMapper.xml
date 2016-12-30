@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//myba  tis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssm.dao.ILineDao">
+	<insert id="addLine" parameterType="com.ssm.bean.Line">
+		insert into
+		tbl_line
+		<foreach collection="list" item="item" separator="union all">
+			select
+			t_lines.nextval,
+			#{item.num,jdbcType=NUMERIC},
+			#{item.order.id,jdbcType=NUMERIC},
+			#{item.book.id,jdbcType=NUMERIC}
+			from dual
+		</foreach>
+	</insert>
+</mapper>

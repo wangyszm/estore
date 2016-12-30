@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.briup.dao.IOrderDao">
+	<select id="findOrderByCustomer" parameterType="Long" resultType="order">
+		select *
+		from tbl_order
+		where customer_id=#{id}
+	</select>
+	
+	<insert id="addOrder">
+		insert into
+		tbl_order
+		values(t_orders.nextval,#{param1.cost},#{param1.orderDate},#{param2.id})
+	</insert>
+	
+	<update id="updateOrder" parameterType="order">
+		update tbl_order
+		set cost=#{cost}
+		where id=#{id}
+	</update>
+</mapper>

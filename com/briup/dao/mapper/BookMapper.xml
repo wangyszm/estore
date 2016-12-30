@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//myba  tis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.briup.dao.IBookDao">
+	<resultMap type="book" id="bookResult">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="price" column="price" />
+		<result property="bookDate" column="bookDate" />
+	</resultMap>
+	<insert id="addBook" parameterType="book" keyProperty="id" useGeneratedKeys="true">
+		<selectKey keyProperty="id" resultType="Long" order="BEFORE">
+			select t_book.nextval from dual
+		</selectKey>>
+		insert into
+		tbl_book
+		values(#{id},#{name},#{price},#{bookDate})
+	</insert>
+	
+	<select id="findBookById" parameterType="Long" resultType="book">
+		select *
+		from tbl_book
+		where id=#{id}
+	</select>
+	<select id="findAllBook" resultMap="bookResult">
+		select *
+		from tbl_book
+	</select>
+	<select id="showBookPage" resultType="book">
+		select *
+		from (
+			select id,name,price,bookDate,rownum as index
+			from tbl_book
+		)
+		where index between 3 and 5
+	</select>
+	
+	<update id="updateBook" parameterType="book">
+		update tbl_book
+		set name=#{name},price=#{price},bookDate=#{bookDate}
+		where id=#{id}
+	</update>
+	
+	<delete id="deleteBook" parameterType="Long">
+		delete tbl_book
+		where id=#{id}
+	</delete>
+	
+</mapper>
